@@ -1,0 +1,7 @@
+aiogram
+fastapi
+aiohttp
+uvicorn
+pypdf2
+python-docx
+pydantic-settings
