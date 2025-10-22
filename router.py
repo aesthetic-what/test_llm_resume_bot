@@ -66,8 +66,14 @@ async def download_resume(message: Message):
     text = await reader(file_path=user_resume_name, file_type=file_type)
     data = requests.post("http://localhost:8000/user/get_skills", json={"text": f"""{text}"""})
     await message.answer(text)
-    await message.answer("Так же нашел твои ключевые навыки:\n"
-                         f"{'\n'.join([skill for skill in data.json()["skills"]])}")
+    skills = data.json().get("skills")
+    if skills:
+        await message.answer(
+            "Так же нашел твои ключевые навыки:\n" +
+            "\n".join(skills)
+        )
+    else:
+        await message.answer("Я не нашел ключевые навыки")
 
 
 @router.message(Command("search"))
